@@ -8,6 +8,9 @@ public :
     Ensemble (int t[], unsigned int nbElements );
     virtual ~Ensemble ();
 
+    void Afficher (void);
+    bool EstEgal (const Ensemble &unEnsemble ) const;
+
 
 protected :
     unsigned int cardinaliteMax, cardinaliteAct;

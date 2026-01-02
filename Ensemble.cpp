@@ -44,3 +44,49 @@ Ensemble::~Ensemble() {
     delete[] elements;
 }
 
+void Ensemble::Afficher() {
+    cout << cardinaliteAct << endl;
+    cout << cardinaliteMax << endl;
+
+    for (unsigned int i = 0; i < cardinaliteAct; i++) {
+        for (unsigned int j = i + 1; j < cardinaliteAct; j++) {
+            if (elements[i] > elements[j]) {
+                int temp = elements[i];
+                elements[i] = elements[j];
+                elements[j] = temp;
+            }
+        }
+    }
+
+    std::cout << "{";
+    for (unsigned int i = 0; i < cardinaliteAct; i++) {
+        std::cout << elements[i];
+        if (i < cardinaliteAct - 1) {
+            std::cout << ",";
+        }
+    }
+    std::cout << "}\r\n";
+}
+
+bool Ensemble::EstEgal(const Ensemble &unEnsemble ) const {
+    if (unEnsemble.cardinaliteAct != cardinaliteAct ) {
+        return false;
+    } 
+    else {
+        bool verif = false;
+        for (unsigned int i=0; i<cardinaliteAct; i++) {
+            for(unsigned int j=0; j<unEnsemble.cardinaliteAct; j++) {
+                if (unEnsemble.elements[j] == elements[i]) {
+                    verif = true;
+                    break;
+                }
+            }
+            if (verif == false) {
+                return false; // Preuve d'inégalité 
+            }
+        }
+    }
+    return true;
+
+} 
+
