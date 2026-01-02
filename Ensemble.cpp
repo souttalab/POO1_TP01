@@ -87,6 +87,84 @@ bool Ensemble::EstEgal(const Ensemble &unEnsemble ) const {
         }
     }
     return true;
-
 } 
+
+crduEstInclus Ensemble::EstInclus(const Ensemble & unEnsemble) const {
+
+    for (unsigned int i = 0; i < cardinaliteAct; i++) {
+        bool trouve = false;
+        for (unsigned int j = 0; j < unEnsemble.cardinaliteAct; j++) {
+            if (elements[i] == unEnsemble.elements[j]) {
+                trouve = true;
+                break; 
+            }
+        }
+
+        if (!trouve) {
+            return NON_INCLUSION; 
+        }
+    }
+
+    if (cardinaliteAct == unEnsemble.cardinaliteAct) {
+        return INCLUSION_LARGE; 
+    }
+    
+    return INCLUSION_STRICTE; 
+}
+
+crduAjouter Ensemble::Ajouter (int aAjouter ) {
+    bool present = false;
+    for (unsigned int i=0; i<cardinaliteAct; i++ ){
+        if (elements[i] == aAjouter ) {
+            present = true;
+            break;
+        }
+    }
+    if (present ){ 
+        return DEJA_PRESENT;
+    }
+
+    if (cardinaliteAct == cardinaliteMax ) {
+        return PLEIN;
+    }
+    else {
+        elements[cardinaliteAct] = aAjouter;
+        cardinaliteAct++;
+        return AJOUTE;
+    }
+}
+
+bool Ensemble::Retirer(int element) {
+    bool present = false;
+    unsigned int indiceTrouve = 0;
+
+    for (unsigned int i = 0; i < cardinaliteAct; i++) {
+        if (elements[i] == element) {
+            present = true;
+            indiceTrouve = i;
+            break;
+        }
+    }
+
+    unsigned int nouvelleCard = present ? (cardinaliteAct - 1) : cardinaliteAct;
+
+    int* nvelements = NULL;
+    if (nouvelleCard > 0) {
+        nvelements = new int[nouvelleCard];
+        unsigned int k = 0;
+        for (unsigned int i = 0; i < cardinaliteAct; i++) {
+            if (present && i == indiceTrouve) {
+                continue; 
+            }
+            nvelements[k++] = elements[i];
+        }
+    }
+
+    delete[] elements;      
+    elements = nvelements;  
+    cardinaliteAct = nouvelleCard;
+    cardinaliteMax = nouvelleCard;
+
+    return present;
+}
 

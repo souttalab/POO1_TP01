@@ -10,8 +10,14 @@ public :
 
     void Afficher (void);
     bool EstEgal (const Ensemble &unEnsemble ) const;
+    
+    enum crduEstInclus { NON_INCLUSION, INCLUSION_LARGE, INCLUSION_STRICTE };
+    crduEstInclus EstInclus (const Ensemble & unEnsemble ) const;
 
-
+    enum crduAjouter { DEJA_PRESENT, PLEIN, AJOUTE };
+    crduAjouter Ajouter (int aAjouter );
+    bool retirer (int element);
+    
 protected :
     unsigned int cardinaliteMax, cardinaliteAct;
     int* elements[];
